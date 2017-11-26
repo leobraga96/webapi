@@ -70,8 +70,9 @@ class RequestValidator implements IRequestValidator
     public function isUriValid($uri) {
         $uri = explode('/', strtok($_SERVER["REQUEST_URI"], '?'));
 
-        if (in_array($uri[3], array_keys($this->resources))) 
-            return (($uri[3] == "user" && $uri[4] == "login") || (in_array($uri[4], $this->operations)));
+        if (in_array($uri[3], array_keys($this->resources))) {
+                    return (($uri[3] == "user" && $uri[4] == "login") || (in_array($uri[4], $this->operations)));
+        }
         return false;
     }
 
