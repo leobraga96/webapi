@@ -31,7 +31,7 @@ class DBHandler {
         $bulk = new MongoDB\Driver\BulkWrite;
         $bulk->insert($document);
         $result = $conn->executeBulkWrite(
-                                        "dbexploit.".$collection,
+                                        "dbexploit." . $collection,
                                             $bulk);
 
         //var_dump($result->isAcknowledged());
@@ -49,7 +49,7 @@ class DBHandler {
     {
         $conn = $this->getConnection();
         $query = new MongoDB\Driver\Query($conditions, []);
-        $rows = $conn->executeQuery("dbexploit.".$collection, $query);
+        $rows = $conn->executeQuery("dbexploit." . $collection, $query);
         $result = Array();
         foreach ($rows as $row) {
             array_push($result, $row);
@@ -62,7 +62,7 @@ class DBHandler {
         $conn = $this->getConnection();
         $bulk = new MongoDB\Driver\BulkWrite;
         $bulk->update($conditions, $set);
-        $result = $conn->executeBulkWrite("dbexploit.".$collection, $bulk);
+        $result = $conn->executeBulkWrite("dbexploit." . $collection, $bulk);
         if ($result->isAcknowledged())
         {
             http_response_code(200);
