@@ -7,13 +7,11 @@ class Request {
 	
     private $method;
     private $protocol;
-    private $host;
     private $uri;
     private $queryString;
     private $body;
     private $validateRequest;
     private $resource;
-    private $porteration;
 
 public function __construct($method, $protocol, $host, $uri = null, $queryString = null, $body = null) 
 {

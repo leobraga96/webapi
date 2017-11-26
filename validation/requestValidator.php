@@ -16,7 +16,7 @@ class RequestValidator implements IRequestValidator
                                 "info" => "infoKeys",
                                 "test" => array("all"));
         $this->operations = array ("", "disable");
-        $this->userKeys = array("name", "registernumber", "username", "institution", "id_tipo", "ativo", "password");
+        $this->userKeys = array("name", "registernumber", "username", "email", "id_tipo", "ativo", "password");
         $this->exploitKeys = array("idexploit", "porta", "desc", "type", "file", "plataforma", "ativo");
         $this->infoKeys = array("idexploit", "porta", "desc", "grau", "codigo", "ativo");
     }

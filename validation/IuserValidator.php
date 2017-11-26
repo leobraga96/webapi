@@ -8,7 +8,7 @@ interface IUserValidator
 
     public function isUsernameValid($username);
 
-    public function isinstitutionValid($institution);
+    public function isemailValid($email);
 
     public function isPasswordValid($password);
 }

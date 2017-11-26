@@ -5,20 +5,15 @@ require_once ('exception/userException.php');
 
 class User {
 	
-    private $name;
-    private $registernumber;
-    private $username;
-    private $institution;
-    private $password;
     private $validateUser;
 
-    public function __construct($name, $registernumber, $username, $institution, $password) {
+    public function __construct($name, $registernumber, $username, $email, $password) {
             $this->validateUser = new UserValidator();
 
-            $this->setName($name);
-            $this->setregisternumber($registernumber);
+        $this->setName($name);
+        $this->setregisternumber($registernumber);
         $this->setUsername($username);
-        $this->setinstitution($institution);
+        $this->setemail($email);
         $this->setPassword($password);
     }
 
@@ -52,14 +47,14 @@ class User {
         }
         $this->username = $username;
     }
-    public function setinstitution($institution)
+    public function setemail($email)
     {
-        if(!$this->validateUser->isinstitutionValid($institution))
+        if(!$this->validateUser->isemailValid($email))
         {
             http_response_code(400);
-            throw new UserException("400", "Bad Request: invalid user institution");
+            throw new UserException("400", "Bad Request: invalid user email");
         }
-        $this->institution = $institution;
+        $this->email = $email;
     }
     public function setPassword($password)
     {

@@ -39,7 +39,7 @@ class UserController {
         try 
         {			
         //var_dump($body);
-            new User($body["name"], $body["registernumber"], $body["username"], $body["institution"], $body["id_tipo"], $body["password"]);
+            new User($body["name"], $body["registernumber"], $body["username"], $body["email"], $body["id_tipo"], $body["password"]);
             $body = $body + Array("ativo" => 1);
         //var_dump($body);
             return (new DBHandler())->insert($body, 'users'); 

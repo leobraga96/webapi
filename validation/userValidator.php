@@ -30,13 +30,12 @@ class UserValidator implements IUserValidator
         return true;
     }
 
-    public function isinstitutionValid($institution)
+    public function isemailValid($email)
     {
-        if (count($institution) > 40)
-            return false;
-        if (is_numeric($institution[0]))
-            return false;
+        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
         return true;
+        }
+        return false;
     }
 
     public function isPasswordValid($password) 
