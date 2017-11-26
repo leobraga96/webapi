@@ -24,7 +24,7 @@ class User {
 
     public function setName($name)
     {
-        if(!$this->validateUser->isNameValid($name))
+        if (!$this->validateUser->isNameValid($name))
 		
         {
             http_response_code(400);
@@ -35,7 +35,7 @@ class User {
 
     public function setregisternumber($registernumber)
     {
-        if(!$this->validateUser->isregisternumberValid($registernumber))
+        if (!$this->validateUser->isregisternumberValid($registernumber))
         {
             http_response_code(400);
             throw new UserException("400", "Bad Request: invalid register number");
@@ -45,7 +45,7 @@ class User {
 
     public function setUsername($username)
     {
-        if(!$this->validateUser->isUsernameValid($username))
+        if (!$this->validateUser->isUsernameValid($username))
         {
             http_response_code(400);
             throw new UserException("400", "Bad Request: invalid username");
@@ -54,7 +54,7 @@ class User {
     }
     public function setinstitution($institution)
     {
-        if(!$this->validateUser->isinstitutionValid($institution))
+        if (!$this->validateUser->isinstitutionValid($institution))
         {
             http_response_code(400);
             throw new UserException("400", "Bad Request: invalid user institution");
@@ -63,7 +63,7 @@ class User {
     }
     public function setPassword($password)
     {
-        if(!$this->validateUser->isPasswordValid($password))
+        if (!$this->validateUser->isPasswordValid($password))
         {
             http_response_code(400);
             throw new UserException("400", "Bad Request: invalid user password");

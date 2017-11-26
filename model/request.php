@@ -29,35 +29,35 @@ public function __construct($method, $protocol, $host, $uri = null, $queryString
     $this->setPorteration();
 }
 
-public function getMethod(){
+public function getMethod() {
     return $this->method;
 } 
 
-public function getUri(){
+public function getUri() {
     return $this->uri;
 } 
 
-public function getBody(){
+public function getBody() {
     return $this->body;
 } 
 
-public function getQueryString(){
+public function getQueryString() {
     return $this->queryString;
 } 
 
-public function getProtocol(){
+public function getProtocol() {
     return $this->protocol;
 } 
 
-public function getResource(){
+public function getResource() {
     return $this->resource;
 } 
 
-public function getOperation(){
+public function getOperation() {
     return $this->operation;
 } 
 
-public function setMethod ($method)
+public function setMethod($method)
 {
     if (!$this->validateRequest->isMethodValid($method))
     {
@@ -89,12 +89,12 @@ public function setUri($uri)
     $this->uri = $uri;
 }
 
-public function setHost ($host)
+public function setHost($host)
 {
     $this->host = $host;
 }
 
-public function setQueryString ($queryString)
+public function setQueryString($queryString)
 {
     if ($queryString != NULL)
     {
@@ -112,8 +112,7 @@ public function setQueryString ($queryString)
             $queryString += [$element[0] => $element[1]];
         }
         $this->queryString = $queryString;
-    }
-    else 
+    } else 
     {
         $this->queryString = NULL;
     }
@@ -138,7 +137,7 @@ private function setResource()
 private function setPorteration()
 {
     $explodedUri = explode('/', $this->uri);
-    if(count($explodedUri) > 4)
+    if (count($explodedUri) > 4)
         $this->operation = $explodedUri[4];
     else 
         $this->operation = "";
