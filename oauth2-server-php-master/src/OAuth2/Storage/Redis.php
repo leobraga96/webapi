@@ -39,7 +39,7 @@ class Redis implements AuthorizationCodeInterface,
      * @param \Predis\Client $redis
      * @param array          $config
      */
-    public function __construct($redis, $config=array())
+    public function __construct($redis, $config = array())
     {
         $this->redis = $redis;
         $this->config = array_merge(array(
@@ -55,18 +55,18 @@ class Redis implements AuthorizationCodeInterface,
 
     protected function getValue($key)
     {
-        if ( isset($this->cache[$key]) ) {
+        if (isset($this->cache[$key])) {
             return $this->cache[$key];
         }
         $value = $this->redis->get($key);
-        if ( isset($value) ) {
+        if (isset($value)) {
             return json_decode($value, true);
         } else {
             return false;
         }
     }
 
-    protected function setValue($key, $value, $expire=0)
+    protected function setValue($key, $value, $expire = 0)
     {
         $this->cache[$key] = $value;
         $str = json_encode($value);
@@ -217,13 +217,13 @@ class Redis implements AuthorizationCodeInterface,
     /* AccessTokenInterface */
     public function getAccessToken($access_token)
     {
-        return $this->getValue($this->config['access_token_key'].$access_token);
+        return $this->getValue($this->config['access_token_key'] . $access_token);
     }
 
     public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = null)
     {
         return $this->setValue(
-            $this->config['access_token_key'].$access_token,
+            $this->config['access_token_key'] . $access_token,
             compact('access_token', 'client_id', 'user_id', 'expires', 'scope'),
             $expires
         );
@@ -241,7 +241,7 @@ class Redis implements AuthorizationCodeInterface,
     {
         $scope = explode(' ', $scope);
 
-        $result = $this->getValue($this->config['scope_key'].'supported:global');
+        $result = $this->getValue($this->config['scope_key'] . 'supported:global');
 
         $supportedScope = explode(' ', (string) $result);
 
@@ -250,8 +250,8 @@ class Redis implements AuthorizationCodeInterface,
 
     public function getDefaultScope($client_id = null)
     {
-        if (is_null($client_id) || !$result = $this->getValue($this->config['scope_key'].'default:'.$client_id)) {
-            $result = $this->getValue($this->config['scope_key'].'default:global');
+        if (is_null($client_id) || !$result = $this->getValue($this->config['scope_key'] . 'default:' . $client_id)) {
+            $result = $this->getValue($this->config['scope_key'] . 'default:global');
         }
 
         return $result;
@@ -264,9 +264,9 @@ class Redis implements AuthorizationCodeInterface,
         }
 
         if (is_null($client_id)) {
-            $key = $this->config['scope_key'].$type.':global';
+            $key = $this->config['scope_key'] . $type . ':global';
         } else {
-            $key = $this->config['scope_key'].$type.':'.$client_id;
+            $key = $this->config['scope_key'] . $type . ':' . $client_id;
         }
 
         return $this->setValue($key, $scope);

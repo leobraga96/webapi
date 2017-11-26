@@ -370,7 +370,7 @@ class AuthorizeController implements AuthorizeControllerInterface
 
         // Put the uri back together
         return
-              ((isset($parse_url["scheme"])) ? $parse_url["scheme"] . "://" : "")
+                ((isset($parse_url["scheme"])) ? $parse_url["scheme"] . "://" : "")
             . ((isset($parse_url["user"])) ? $parse_url["user"]
             . ((isset($parse_url["pass"])) ? ":" . $parse_url["pass"] : "") . "@" : "")
             . ((isset($parse_url["host"])) ? $parse_url["host"] : "")

@@ -20,7 +20,7 @@ class Bootstrap
 
     public function __construct()
     {
-        $this->configDir = __DIR__.'/../../../config';
+        $this->configDir = __DIR__ . '/../../../config';
     }
 
     public static function getInstance()
@@ -78,7 +78,7 @@ class Bootstrap
 
     public function getMemoryStorage()
     {
-        return new Memory(json_decode(file_get_contents($this->configDir. '/storage.json'), true));
+        return new Memory(json_decode(file_get_contents($this->configDir . '/storage.json'), true));
     }
 
     public function getRedisStorage()
@@ -420,7 +420,7 @@ class Bootstrap
 
     public function getSqliteDir()
     {
-        return $this->configDir. '/test.sqlite';
+        return $this->configDir . '/test.sqlite';
     }
 
     public function getConfigDir()
@@ -430,31 +430,31 @@ class Bootstrap
 
     private function createCouchbaseDB(\Couchbase $db)
     {
-        $db->set('oauth_clients-oauth_test_client',json_encode(array(
+        $db->set('oauth_clients-oauth_test_client', json_encode(array(
             'client_id' => "oauth_test_client",
             'client_secret' => "testpass",
             'redirect_uri' => "http://example.com",
             'grant_types' => 'implicit password'
         )));
 
-        $db->set('oauth_access_tokens-testtoken',json_encode(array(
+        $db->set('oauth_access_tokens-testtoken', json_encode(array(
             'access_token' => "testtoken",
             'client_id' => "Some Client"
         )));
 
-        $db->set('oauth_authorization_codes-testcode',json_encode(array(
+        $db->set('oauth_authorization_codes-testcode', json_encode(array(
             'access_token' => "testcode",
             'client_id' => "Some Client"
         )));
 
-        $db->set('oauth_users-testuser',json_encode(array(
+        $db->set('oauth_users-testuser', json_encode(array(
             'username' => 'testuser',
             'password' => 'password',
             'email' => 'testuser@test.com',
             'email_verified' => true,
         )));
 
-        $db->set('oauth_jwt-oauth_test_client',json_encode(array(
+        $db->set('oauth_jwt-oauth_test_client', json_encode(array(
             'client_id' => 'oauth_test_client',
             'key'       => $this->getTestPublicKey(),
             'subject'   => 'test_subject',
@@ -586,12 +586,12 @@ class Bootstrap
 
     public function getTestPublicKey()
     {
-        return file_get_contents(__DIR__.'/../../../config/keys/id_rsa.pub');
+        return file_get_contents(__DIR__ . '/../../../config/keys/id_rsa.pub');
     }
 
     private function getTestPrivateKey()
     {
-        return file_get_contents(__DIR__.'/../../../config/keys/id_rsa');
+        return file_get_contents(__DIR__ . '/../../../config/keys/id_rsa');
     }
 
     public function getDynamoDbStorage()
@@ -619,14 +619,14 @@ class Bootstrap
                     $this->createDynamoDb($client, $prefix);
                     $this->populateDynamoDb($client, $prefix);
                     $config = array(
-                        'client_table' => $prefix.'oauth_clients',
-                        'access_token_table' => $prefix.'oauth_access_tokens',
-                        'refresh_token_table' => $prefix.'oauth_refresh_tokens',
-                        'code_table' => $prefix.'oauth_authorization_codes',
-                        'user_table' => $prefix.'oauth_users',
-                        'jwt_table'  => $prefix.'oauth_jwt',
-                        'scope_table'  => $prefix.'oauth_scopes',
-                        'public_key_table'  => $prefix.'oauth_public_keys',
+                        'client_table' => $prefix . 'oauth_clients',
+                        'access_token_table' => $prefix . 'oauth_access_tokens',
+                        'refresh_token_table' => $prefix . 'oauth_refresh_tokens',
+                        'code_table' => $prefix . 'oauth_authorization_codes',
+                        'user_table' => $prefix . 'oauth_users',
+                        'jwt_table'  => $prefix . 'oauth_jwt',
+                        'scope_table'  => $prefix . 'oauth_scopes',
+                        'public_key_table'  => $prefix . 'oauth_public_keys',
                     );
                     $this->dynamodb = new DynamoDB($client, $config);
                 } elseif (!$this->dynamodb) {
@@ -669,12 +669,12 @@ class Bootstrap
     private function deleteDynamoDb(\Aws\DynamoDb\DynamoDbClient $client, $prefix = null, $waitForDeletion = false)
     {
         $tablesList = explode(' ', 'oauth_access_tokens oauth_authorization_codes oauth_clients oauth_jwt oauth_public_keys oauth_refresh_tokens oauth_scopes oauth_users');
-        $nbTables  = count($tablesList);
+        $nbTables = count($tablesList);
 
         // Delete all table.
         foreach ($tablesList as $key => $table) {
             try {
-                $client->deleteTable(array('TableName' => $prefix.$table));
+                $client->deleteTable(array('TableName' => $prefix . $table));
             } catch (\Aws\DynamoDb\Exception\DynamoDbException $e) {
                 // Table does not exist : nothing to do
             }
@@ -688,7 +688,7 @@ class Bootstrap
                 $nbTableDeleted = 0;
                 foreach ($tablesList as $key => $table) {
                     try {
-                        $result = $client->describeTable(array('TableName' => $prefix.$table));
+                        $result = $client->describeTable(array('TableName' => $prefix . $table));
                     } catch (\Aws\DynamoDb\Exception\DynamoDbException $e) {
                         // Table does not exist : nothing to do
                         $nbTableDeleted++;
@@ -712,88 +712,88 @@ class Bootstrap
     private function createDynamoDb(\Aws\DynamoDb\DynamoDbClient $client, $prefix = null)
     {
         $tablesList = explode(' ', 'oauth_access_tokens oauth_authorization_codes oauth_clients oauth_jwt oauth_public_keys oauth_refresh_tokens oauth_scopes oauth_users');
-        $nbTables  = count($tablesList);
+        $nbTables = count($tablesList);
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_access_tokens',
+            'TableName' => $prefix . 'oauth_access_tokens',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'access_token','AttributeType' => 'S')
+                array('AttributeName' => 'access_token', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'access_token','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'KeySchema' => array(array('AttributeName' => 'access_token', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_authorization_codes',
+            'TableName' => $prefix . 'oauth_authorization_codes',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'authorization_code','AttributeType' => 'S')
+                array('AttributeName' => 'authorization_code', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'authorization_code','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'KeySchema' => array(array('AttributeName' => 'authorization_code', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_clients',
+            'TableName' => $prefix . 'oauth_clients',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'client_id','AttributeType' => 'S')
+                array('AttributeName' => 'client_id', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'client_id','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'KeySchema' => array(array('AttributeName' => 'client_id', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_jwt',
+            'TableName' => $prefix . 'oauth_jwt',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'client_id','AttributeType' => 'S'),
-                array('AttributeName' => 'subject','AttributeType' => 'S')
+                array('AttributeName' => 'client_id', 'AttributeType' => 'S'),
+                array('AttributeName' => 'subject', 'AttributeType' => 'S')
             ),
             'KeySchema' => array(
-                array('AttributeName' => 'client_id','KeyType' => 'HASH'),
-                array('AttributeName' => 'subject','KeyType' => 'RANGE')
+                array('AttributeName' => 'client_id', 'KeyType' => 'HASH'),
+                array('AttributeName' => 'subject', 'KeyType' => 'RANGE')
             ),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_public_keys',
+            'TableName' => $prefix . 'oauth_public_keys',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'client_id','AttributeType' => 'S')
+                array('AttributeName' => 'client_id', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'client_id','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'KeySchema' => array(array('AttributeName' => 'client_id', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_refresh_tokens',
+            'TableName' => $prefix . 'oauth_refresh_tokens',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'refresh_token','AttributeType' => 'S')
+                array('AttributeName' => 'refresh_token', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'refresh_token','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'KeySchema' => array(array('AttributeName' => 'refresh_token', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_scopes',
+            'TableName' => $prefix . 'oauth_scopes',
             'AttributeDefinitions' => array(
-                array('AttributeName' => 'scope','AttributeType' => 'S'),
-                array('AttributeName' => 'is_default','AttributeType' => 'S')
+                array('AttributeName' => 'scope', 'AttributeType' => 'S'),
+                array('AttributeName' => 'is_default', 'AttributeType' => 'S')
             ),
-            'KeySchema' => array(array('AttributeName' => 'scope','KeyType' => 'HASH')),
+            'KeySchema' => array(array('AttributeName' => 'scope', 'KeyType' => 'HASH')),
             'GlobalSecondaryIndexes' => array(
                 array(
                     'IndexName' => 'is_default-index',
                     'KeySchema' => array(array('AttributeName' => 'is_default', 'KeyType' => 'HASH')),
                     'Projection' => array('ProjectionType' => 'ALL'),
-                    'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+                    'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
                 ),
             ),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         $client->createTable(array(
-            'TableName' => $prefix.'oauth_users',
-            'AttributeDefinitions' => array(array('AttributeName' => 'username','AttributeType' => 'S')),
-            'KeySchema' => array(array('AttributeName' => 'username','KeyType' => 'HASH')),
-            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1,'WriteCapacityUnits' => 1)
+            'TableName' => $prefix . 'oauth_users',
+            'AttributeDefinitions' => array(array('AttributeName' => 'username', 'AttributeType' => 'S')),
+            'KeySchema' => array(array('AttributeName' => 'username', 'KeyType' => 'HASH')),
+            'ProvisionedThroughput' => array('ReadCapacityUnits'  => 1, 'WriteCapacityUnits' => 1)
         ));
 
         // Wait for creation
@@ -802,7 +802,7 @@ class Bootstrap
             $nbTableCreated = 0;
             foreach ($tablesList as $key => $table) {
                 try {
-                    $result = $client->describeTable(array('TableName' => $prefix.$table));
+                    $result = $client->describeTable(array('TableName' => $prefix . $table));
                     if ($result['Table']['TableStatus'] == 'ACTIVE') {
                         $nbTableCreated++;
                     }
@@ -822,20 +822,20 @@ class Bootstrap
         // set up scopes
         foreach (explode(' ', 'supportedscope1 supportedscope2 supportedscope3 supportedscope4 clientscope1 clientscope2 clientscope3') as $supportedScope) {
             $client->putItem(array(
-                'TableName' => $prefix.'oauth_scopes',
+                'TableName' => $prefix . 'oauth_scopes',
                 'Item' => array('scope' => array('S' => $supportedScope))
             ));
         }
 
         foreach (array('defaultscope1', 'defaultscope2') as $defaultScope) {
             $client->putItem(array(
-                'TableName' => $prefix.'oauth_scopes',
+                'TableName' => $prefix . 'oauth_scopes',
                 'Item' => array('scope' => array('S' => $defaultScope), 'is_default' => array('S' => "true"))
             ));
         }
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_clients',
+            'TableName' => $prefix . 'oauth_clients',
             'Item' => array(
                 'client_id' => array('S' => 'Test Client ID'),
                 'client_secret' => array('S' => 'TestSecret'),
@@ -844,7 +844,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_clients',
+            'TableName' => $prefix . 'oauth_clients',
             'Item' => array(
                 'client_id' => array('S' => 'Test Client ID 2'),
                 'client_secret' => array('S' => 'TestSecret'),
@@ -853,7 +853,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_clients',
+            'TableName' => $prefix . 'oauth_clients',
             'Item' => array(
                 'client_id' => array('S' => 'Test Default Scope Client ID'),
                 'client_secret' => array('S' => 'TestSecret'),
@@ -862,7 +862,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_clients',
+            'TableName' => $prefix . 'oauth_clients',
             'Item' => array(
                 'client_id' => array('S' => 'oauth_test_client'),
                 'client_secret' => array('S' => 'testpass'),
@@ -871,7 +871,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_access_tokens',
+            'TableName' => $prefix . 'oauth_access_tokens',
             'Item' => array(
                 'access_token' => array('S' => 'testtoken'),
                 'client_id' => array('S' => 'Some Client'),
@@ -879,16 +879,16 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_access_tokens',
+            'TableName' => $prefix . 'oauth_access_tokens',
             'Item' => array(
-                 'access_token' => array('S' => 'accesstoken-openid-connect'),
-                 'client_id' => array('S' => 'Some Client'),
-                 'user_id' => array('S' => 'testuser'),
+                    'access_token' => array('S' => 'accesstoken-openid-connect'),
+                    'client_id' => array('S' => 'Some Client'),
+                    'user_id' => array('S' => 'testuser'),
             )
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_authorization_codes',
+            'TableName' => $prefix . 'oauth_authorization_codes',
             'Item' => array(
                 'authorization_code' => array('S' => 'testcode'),
                 'client_id' => array('S' => 'Some Client'),
@@ -896,7 +896,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_users',
+            'TableName' => $prefix . 'oauth_users',
             'Item' => array(
                 'username' => array('S' => 'testuser'),
                 'password' => array('S' => 'password'),
@@ -906,7 +906,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_public_keys',
+            'TableName' => $prefix . 'oauth_public_keys',
             'Item' => array(
                 'client_id' => array('S' => 'ClientID_One'),
                 'public_key' => array('S' => 'client_1_public'),
@@ -916,7 +916,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_public_keys',
+            'TableName' => $prefix . 'oauth_public_keys',
             'Item' => array(
                 'client_id' => array('S' => 'ClientID_Two'),
                 'public_key' => array('S' => 'client_2_public'),
@@ -926,7 +926,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_public_keys',
+            'TableName' => $prefix . 'oauth_public_keys',
             'Item' => array(
                 'client_id' => array('S' => '0'),
                 'public_key' => array('S' => $this->getTestPublicKey()),
@@ -936,7 +936,7 @@ class Bootstrap
         ));
 
         $client->putItem(array(
-            'TableName' => $prefix.'oauth_jwt',
+            'TableName' => $prefix . 'oauth_jwt',
             'Item' => array(
                 'client_id' => array('S' => 'oauth_test_client'),
                 'subject' => array('S' => 'test_subject'),

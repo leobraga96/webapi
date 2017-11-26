@@ -29,7 +29,7 @@ class FirebaseJwt implements EncryptionInterface
                 $key = null;
             }
 
-            return (array)\JWT::decode($jwt, $key, $allowedAlgorithms);
+            return (array) \JWT::decode($jwt, $key, $allowedAlgorithms);
         } catch (\Exception $e) {
             return false;
         }
