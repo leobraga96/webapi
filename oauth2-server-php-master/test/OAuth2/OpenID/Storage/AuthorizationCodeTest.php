@@ -73,7 +73,7 @@ class AuthorizationCodeTest extends BaseTest
         $expires = time() + 20;
         $scope = null;
         $id_token = 'fake_id_token_to_remove';
-        $authcode = 'new-openid-code-'.rand();
+        $authcode = 'new-openid-code-' . rand();
         $success = $storage->setAuthorizationCode($authcode, 'client ID', 'SOMEUSERID', 'http://example.com', $expires, $scope, $id_token);
         $this->assertTrue($success);
 

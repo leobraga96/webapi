@@ -47,8 +47,8 @@ class JwtAccessTokenTest extends TestCase
         $server = $this->getTestServer();
         $request = TestRequest::createPost(array(
             'grant_type'    => 'client_credentials', // valid grant type
-            'client_id'     => 'Test Client ID',     // valid client id
-            'client_secret' => 'TestSecret',         // valid client secret
+            'client_id'     => 'Test Client ID', // valid client id
+            'client_secret' => 'TestSecret', // valid client secret
         ));
         $server->handleTokenRequest($request, $response = new Response());
 
@@ -62,8 +62,8 @@ class JwtAccessTokenTest extends TestCase
         $server = $this->getTestServer();
         $request = TestRequest::createPost(array(
             'grant_type'    => 'client_credentials', // valid grant type
-            'client_id'     => 'Test Client ID',     // valid client id
-            'client_secret' => 'TestSecret',         // valid client secret
+            'client_id'     => 'Test Client ID', // valid client id
+            'client_secret' => 'TestSecret', // valid client secret
         ));
         $server->handleTokenRequest($request, $response = new Response());
         $this->assertNotNull($JwtAccessToken = $response->getParameter('access_token'));
@@ -82,8 +82,8 @@ class JwtAccessTokenTest extends TestCase
         $server = $this->getTestServer();
         $request = TestRequest::createPost(array(
             'grant_type'    => 'client_credentials', // valid grant type
-            'client_id'     => 'Test Client ID',     // valid client id
-            'client_secret' => 'TestSecret',         // valid client secret
+            'client_id'     => 'Test Client ID', // valid client id
+            'client_secret' => 'TestSecret', // valid client secret
         ));
         $server->handleTokenRequest($request, $response = new Response());
         $this->assertNotNull($JwtAccessToken = $response->getParameter('access_token'));
@@ -111,11 +111,11 @@ class JwtAccessTokenTest extends TestCase
         $server->addResponseType(new JwtAccessToken($memoryStorage, $memoryStorage, $memoryStorage), 'token');
 
         $request = TestRequest::createPost(array(
-            'grant_type'    => 'password',         // valid grant type
-            'client_id'     => 'Test Client ID',   // valid client id
-            'client_secret' => 'TestSecret',       // valid client secret
-            'username'      => 'test-username',    // valid username
-            'password'      => 'testpass',         // valid password
+            'grant_type'    => 'password', // valid grant type
+            'client_id'     => 'Test Client ID', // valid client id
+            'client_secret' => 'TestSecret', // valid client secret
+            'username'      => 'test-username', // valid username
+            'password'      => 'testpass', // valid password
         ));
 
         // make the call to grant a crypto token
@@ -131,8 +131,8 @@ class JwtAccessTokenTest extends TestCase
         // use the refresh token to get another access token
         $request = TestRequest::createPost(array(
             'grant_type'    => 'refresh_token',
-            'client_id'     => 'Test Client ID',   // valid client id
-            'client_secret' => 'TestSecret',       // valid client secret
+            'client_id'     => 'Test Client ID', // valid client id
+            'client_secret' => 'TestSecret', // valid client secret
             'refresh_token' => $refreshToken,
         ));
 

@@ -78,7 +78,7 @@ class ClientCredentialsTest extends TestCase
     {
         // create with HTTP_AUTHORIZATION in header
         $server = $this->getTestServer();
-        $headers = array('HTTP_AUTHORIZATION' => 'Basic '.base64_encode('Test Client ID:TestSecret'), 'REQUEST_METHOD' => 'POST');
+        $headers = array('HTTP_AUTHORIZATION' => 'Basic ' . base64_encode('Test Client ID:TestSecret'), 'REQUEST_METHOD' => 'POST');
         $params  = array('grant_type' => 'client_credentials');
         $request = new Request(array(), $params, array(), array(), array(), $headers);
         $token = $server->grantAccessToken($request, new Response());

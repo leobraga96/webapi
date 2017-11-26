@@ -208,10 +208,10 @@ class TokenControllerTest extends TestCase
         $server->addGrantType(new UserCredentials($storage));
 
         $request = TestRequest::createPost(array(
-            'grant_type' => 'password',                          // valid grant type
+            'grant_type' => 'password', // valid grant type
             'client_id'  => 'Test Client ID For Password Grant', // valid client id
-            'username'   => 'johndoe',                           // valid username
-            'password'   => 'password',                          // valid password for username
+            'username'   => 'johndoe', // valid username
+            'password'   => 'password', // valid password for username
         ));
         $server->handleTokenRequest($request, $response = new Response());
 

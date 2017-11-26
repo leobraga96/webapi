@@ -20,7 +20,6 @@ interface IdTokenInterface extends ResponseTypeInterface
      * @param string $nonce            - OPTIONAL The nonce.
      * @param string $userClaims       - OPTIONAL Claims about the user.
      * @param string $access_token     - OPTIONAL The access token, if known.
-
      * @internal param string $user_id - The user id.
      * @return string The ID Token represented as a JSON Web Token (JWT).
      *

@@ -131,7 +131,7 @@ class HttpBasic implements ClientAssertionTypeInterface
 
         if ($response) {
             $message = $this->config['allow_credentials_in_request_body'] ? ' or body' : '';
-            $response->setError(400, 'invalid_client', 'Client credentials were not found in the headers'.$message);
+            $response->setError(400, 'invalid_client', 'Client credentials were not found in the headers' . $message);
         }
 
         return null;

@@ -268,13 +268,13 @@ class ServerTest extends TestCase
     {
         $storage = $this->getMock('OAuth2\Storage\Memory');
         $storage
-          ->expects($this->any())
-          ->method('getClientDetails')
-          ->will($this->returnValue(array('client_id' => 'some_client')));
+            ->expects($this->any())
+            ->method('getClientDetails')
+            ->will($this->returnValue(array('client_id' => 'some_client')));
         $storage
-          ->expects($this->any())
-          ->method('checkRestrictedGrantType')
-          ->will($this->returnValue(true));
+            ->expects($this->any())
+            ->method('checkRestrictedGrantType')
+            ->will($this->returnValue(true));
 
         // add with the "code" key explicitly set
         $codeType = new AuthorizationCode($storage);
