@@ -511,7 +511,7 @@ class Pdo implements
         $stmt->execute(array('is_default' => true));
 
         if ($result = $stmt->fetchAll(\PDO::FETCH_ASSOC)) {
-            $defaultScope = array_map(function ($row) {
+            $defaultScope = array_map(function($row) {
                 return $row['scope'];
             }, $result);
 

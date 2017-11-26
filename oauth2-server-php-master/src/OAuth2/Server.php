@@ -861,7 +861,7 @@ class Server implements ResourceControllerInterface,
         }
 
         $config = array_intersect_key($this->config, array_flip(explode(' ', 'access_lifetime refresh_token_lifetime')));
-        $config['token_type'] = $this->tokenType ? $this->tokenType->getTokenType() :  $this->getDefaultTokenType()->getTokenType();
+        $config['token_type'] = $this->tokenType ? $this->tokenType->getTokenType() : $this->getDefaultTokenType()->getTokenType();
 
         return new AccessToken($this->storages['access_token'], $refreshStorage, $config);
     }

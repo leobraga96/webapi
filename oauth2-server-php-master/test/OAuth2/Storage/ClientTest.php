@@ -70,8 +70,8 @@ class ClientTest extends BaseTest
             return;
         }
 
-        $publicClientId = 'public-client-'.rand();
-        $confidentialClientId = 'confidential-client-'.rand();
+        $publicClientId = 'public-client-' . rand();
+        $confidentialClientId = 'confidential-client-' . rand();
 
         // create a new client
         $success1 = $storage->setClientDetails($publicClientId, '');
@@ -93,7 +93,7 @@ class ClientTest extends BaseTest
             return;
         }
 
-        $clientId = 'some-client-'.rand();
+        $clientId = 'some-client-' . rand();
 
         // create a new client
         $success = $storage->setClientDetails($clientId, 'somesecret', 'http://test.com', 'client_credentials', 'clientscope1', 'brent@brentertainment.com');

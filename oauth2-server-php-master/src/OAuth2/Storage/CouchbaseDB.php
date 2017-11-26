@@ -48,29 +48,29 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     }
 
     // Helper function to access couchbase item by type:
-    protected function getObjectByType($name,$id)
+    protected function getObjectByType($name, $id)
     {
-        return json_decode($this->db->get($this->config[$name].'-'.$id),true);
+        return json_decode($this->db->get($this->config[$name] . '-' . $id), true);
     }
 
     // Helper function to set couchbase item by type:
-    protected function setObjectByType($name,$id,$array)
+    protected function setObjectByType($name, $id, $array)
     {
         $array['type'] = $name;
 
-        return $this->db->set($this->config[$name].'-'.$id,json_encode($array));
+        return $this->db->set($this->config[$name] . '-' . $id, json_encode($array));
     }
 
     // Helper function to delete couchbase item by type, wait for persist to at least 1 node
-    protected function deleteObjectByType($name,$id)
+    protected function deleteObjectByType($name, $id)
     {
-        $this->db->delete($this->config[$name].'-'.$id,"",1);
+        $this->db->delete($this->config[$name] . '-' . $id, "", 1);
     }
 
     /* ClientCredentialsInterface */
     public function checkClientCredentials($client_id, $client_secret = null)
     {
-        if ($result = $this->getObjectByType('client_table',$client_id)) {
+        if ($result = $this->getObjectByType('client_table', $client_id)) {
             return $result['client_secret'] == $client_secret;
         }
 
@@ -79,7 +79,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
 
     public function isPublicClient($client_id)
     {
-        if (!$result = $this->getObjectByType('client_table',$client_id)) {
+        if (!$result = $this->getObjectByType('client_table', $client_id)) {
             return false;
         }
 
@@ -89,7 +89,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     /* ClientInterface */
     public function getClientDetails($client_id)
     {
-        $result = $this->getObjectByType('client_table',$client_id);
+        $result = $this->getObjectByType('client_table', $client_id);
 
         return is_null($result) ? false : $result;
     }
@@ -98,7 +98,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     {
         if ($this->getClientDetails($client_id)) {
 
-            $this->setObjectByType('client_table',$client_id, array(
+            $this->setObjectByType('client_table', $client_id, array(
                 'client_id'     => $client_id,
                 'client_secret' => $client_secret,
                 'redirect_uri'  => $redirect_uri,
@@ -107,7 +107,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
                 'user_id'       => $user_id,
             ));
         } else {
-            $this->setObjectByType('client_table',$client_id, array(
+            $this->setObjectByType('client_table', $client_id, array(
                 'client_id'     => $client_id,
                 'client_secret' => $client_secret,
                 'redirect_uri'  => $redirect_uri,
@@ -136,7 +136,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     /* AccessTokenInterface */
     public function getAccessToken($access_token)
     {
-        $token = $this->getObjectByType('access_token_table',$access_token);
+        $token = $this->getObjectByType('access_token_table', $access_token);
 
         return is_null($token) ? false : $token;
     }
@@ -145,7 +145,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     {
         // if it exists, update it.
         if ($this->getAccessToken($access_token)) {
-            $this->setObjectByType('access_token_table',$access_token, array(
+            $this->setObjectByType('access_token_table', $access_token, array(
                 'access_token' => $access_token,
                 'client_id' => $client_id,
                 'expires' => $expires,
@@ -153,7 +153,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
                 'scope' => $scope
             ));
         } else {
-            $this->setObjectByType('access_token_table',$access_token,  array(
+            $this->setObjectByType('access_token_table', $access_token, array(
                 'access_token' => $access_token,
                 'client_id' => $client_id,
                 'expires' => $expires,
@@ -168,7 +168,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     /* AuthorizationCodeInterface */
     public function getAuthorizationCode($code)
     {
-        $code = $this->getObjectByType('code_table',$code);
+        $code = $this->getObjectByType('code_table', $code);
 
         return is_null($code) ? false : $code;
     }
@@ -177,7 +177,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     {
         // if it exists, update it.
         if ($this->getAuthorizationCode($code)) {
-            $this->setObjectByType('code_table',$code, array(
+            $this->setObjectByType('code_table', $code, array(
                 'authorization_code' => $code,
                 'client_id' => $client_id,
                 'user_id' => $user_id,
@@ -187,7 +187,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
                 'id_token' => $id_token,
             ));
         } else {
-            $this->setObjectByType('code_table',$code,array(
+            $this->setObjectByType('code_table', $code, array(
                 'authorization_code' => $code,
                 'client_id' => $client_id,
                 'user_id' => $user_id,
@@ -203,7 +203,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
 
     public function expireAuthorizationCode($code)
     {
-        $this->deleteObjectByType('code_table',$code);
+        $this->deleteObjectByType('code_table', $code);
 
         return true;
     }
@@ -230,14 +230,14 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     /* RefreshTokenInterface */
     public function getRefreshToken($refresh_token)
     {
-        $token = $this->getObjectByType('refresh_token_table',$refresh_token);
+        $token = $this->getObjectByType('refresh_token_table', $refresh_token);
 
         return is_null($token) ? false : $token;
     }
 
     public function setRefreshToken($refresh_token, $client_id, $user_id, $expires, $scope = null)
     {
-        $this->setObjectByType('refresh_token_table',$refresh_token, array(
+        $this->setObjectByType('refresh_token_table', $refresh_token, array(
             'refresh_token' => $refresh_token,
             'client_id' => $client_id,
             'user_id' => $user_id,
@@ -250,7 +250,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
 
     public function unsetRefreshToken($refresh_token)
     {
-        $this->deleteObjectByType('refresh_token_table',$refresh_token);
+        $this->deleteObjectByType('refresh_token_table', $refresh_token);
 
         return true;
     }
@@ -263,7 +263,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
 
     public function getUser($username)
     {
-        $result = $this->getObjectByType('user_table',$username);
+        $result = $this->getObjectByType('user_table', $username);
 
         return is_null($result) ? false : $result;
     }
@@ -271,7 +271,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
     public function setUser($username, $password, $firstName = null, $lastName = null)
     {
         if ($this->getUser($username)) {
-            $this->setObjectByType('user_table',$username, array(
+            $this->setObjectByType('user_table', $username, array(
                 'username' => $username,
                 'password' => $password,
                 'first_name' => $firstName,
@@ -279,7 +279,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
             ));
 
         } else {
-            $this->setObjectByType('user_table',$username, array(
+            $this->setObjectByType('user_table', $username, array(
                 'username' => $username,
                 'password' => $password,
                 'first_name' => $firstName,
@@ -293,7 +293,7 @@ class CouchbaseDB implements AuthorizationCodeInterface,
 
     public function getClientKey($client_id, $subject)
     {
-        if (!$jwt = $this->getObjectByType('jwt_table',$client_id)) {
+        if (!$jwt = $this->getObjectByType('jwt_table', $client_id)) {
             return false;
         }
 

@@ -414,7 +414,7 @@ class AuthorizeControllerTest extends TestCase
             'client_id'     => 'Test Client ID', // valid client id
             'redirect_uri'  => 'http://adobe.com', // valid redirect URI
             'response_type' => 'code',
-            'state'         => 'test',      // valid state string (just needs to be passed back to us)
+            'state'         => 'test', // valid state string (just needs to be passed back to us)
             'fake'          => 'something', // extra query param
         ));
         $server->handleAuthorizeRequest($request, $response = new Response(), true);

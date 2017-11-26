@@ -18,9 +18,9 @@ class RefreshTokenTest extends TestCase
         $server->addGrantType(new RefreshToken($this->storage));
 
         $request = TestRequest::createPost(array(
-            'grant_type' => 'refresh_token',  // valid grant type
+            'grant_type' => 'refresh_token', // valid grant type
             'client_id'  => 'Test Client ID', // valid client id
-            'client_secret' => 'TestSecret',  // valid client secret
+            'client_secret' => 'TestSecret', // valid client secret
         ));
         $server->grantAccessToken($request, $response = new Response());
 

@@ -399,7 +399,7 @@ class Cassandra implements AuthorizationCodeInterface,
      */
     public function getAccessToken($access_token)
     {
-        return $this->getValue($this->config['access_token_key'].$access_token);
+        return $this->getValue($this->config['access_token_key'] . $access_token);
     }
 
     /**
@@ -413,7 +413,7 @@ class Cassandra implements AuthorizationCodeInterface,
     public function setAccessToken($access_token, $client_id, $user_id, $expires, $scope = null)
     {
         return $this->setValue(
-            $this->config['access_token_key'].$access_token,
+            $this->config['access_token_key'] . $access_token,
             compact('access_token', 'client_id', 'user_id', 'expires', 'scope'),
             $expires
         );
@@ -436,7 +436,7 @@ class Cassandra implements AuthorizationCodeInterface,
     {
         $scope = explode(' ', $scope);
 
-        $result = $this->getValue($this->config['scope_key'].'supported:global');
+        $result = $this->getValue($this->config['scope_key'] . 'supported:global');
 
         $supportedScope = explode(' ', (string) $result);
 
@@ -449,8 +449,8 @@ class Cassandra implements AuthorizationCodeInterface,
      */
     public function getDefaultScope($client_id = null)
     {
-        if (is_null($client_id) || !$result = $this->getValue($this->config['scope_key'].'default:'.$client_id)) {
-            $result = $this->getValue($this->config['scope_key'].'default:global');
+        if (is_null($client_id) || !$result = $this->getValue($this->config['scope_key'] . 'default:' . $client_id)) {
+            $result = $this->getValue($this->config['scope_key'] . 'default:global');
         }
 
         return $result;
@@ -470,9 +470,9 @@ class Cassandra implements AuthorizationCodeInterface,
         }
 
         if (is_null($client_id)) {
-            $key = $this->config['scope_key'].$type.':global';
+            $key = $this->config['scope_key'] . $type . ':global';
         } else {
-            $key = $this->config['scope_key'].$type.':'.$client_id;
+            $key = $this->config['scope_key'] . $type . ':' . $client_id;
         }
 
         return $this->setValue($key, $scope);
@@ -489,7 +489,7 @@ class Cassandra implements AuthorizationCodeInterface,
             return false;
         }
 
-        if (isset($jwt['subject']) && $jwt['subject'] == $subject ) {
+        if (isset($jwt['subject']) && $jwt['subject'] == $subject) {
             return $jwt['key'];
         }
 
@@ -649,7 +649,7 @@ class Cassandra implements AuthorizationCodeInterface,
 
         foreach ($claimValues as $value) {
             if ($value == 'email_verified') {
-                $userClaims[$value] = $userDetails[$value]=='true' ? true : false;
+                $userClaims[$value] = $userDetails[$value] == 'true' ? true : false;
             } else {
                 $userClaims[$value] = isset($userDetails[$value]) ? $userDetails[$value] : null;
             }
