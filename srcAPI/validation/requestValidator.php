@@ -53,18 +53,17 @@ class RequestValidator implements IRequestValidator
         if ($queryString != "")
         {
             $queryString = explode('&', $queryString);
-            $validParameters = array("registernumber", "desc", "idexploit", "porta", "codigo", "grau", "file");
-            $countParameters = count($queryString);
-            for ($i = 0; $i < $countParameters; $i++)
+            $validParameters = array("registernumber", "username", "desc", "idexploit", "porta", "plataforma", "type", "file");
+            for ($i = 0; $i < count($queryString); $i++)
             {
                 $queryString[$i] = strtok($queryString[$i], '=');
-                if (!in_array($queryString[$i], $validParameters))
+                if (in_array($queryString[$i], $validParameters))
                 {
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public function isUriValid($uri) {
