@@ -24,9 +24,7 @@ class RequestTreater {
             $controller = new $this->controllers[$request->getResource()]($request);
 			
             return $controller->routeOperation();
-        }
-
-        catch (RequestException $re)
+        } catch (RequestException $re)
         {
             return $re->toJson();
         }

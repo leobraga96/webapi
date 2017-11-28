@@ -11,11 +11,11 @@ class RequestValidator implements IRequestValidator
 
     public function __construct()
     {
-        $this->resources = array("user" => "userKeys" ,
+        $this->resources = array("user" => "userKeys",
                                 "exploit" => "exploitKeys", 
                                 "info" => "infoKeys",
                                 "test" => array("all"));
-        $this->operations = array ("", "disable");
+        $this->operations = array("", "disable");
         $this->userKeys = array("name", "registernumber", "username", "email", "id_tipo", "ativo", "password");
         $this->exploitKeys = array("idexploit", "porta", "desc", "type", "file", "plataforma", "ativo");
         $this->infoKeys = array("idexploit", "porta", "desc", "grau", "codigo", "ativo");
@@ -23,7 +23,7 @@ class RequestValidator implements IRequestValidator
 
     public function isMethodValid($method) {
 
-        if($method != 'GET' && $method != 'POST' && $method != 'PUT') {
+        if ($method != 'GET' && $method != 'POST' && $method != 'PUT') {
             return false;
         }
 
@@ -67,16 +67,17 @@ class RequestValidator implements IRequestValidator
     }
 
     public function isUriValid($uri) {
-        $uri = explode('/', strtok($_SERVER["REQUEST_URI"],'?'));
+        $uri = explode('/', strtok($_SERVER["REQUEST_URI"], '?'));
 
-        if (in_array($uri[3], array_keys($this->resources))) 
-            return (($uri[3] == "user" && $uri[4] == "login") || (in_array($uri[4], $this->operations)));
+        if (in_array($uri[3], array_keys($this->resources))) {
+                    return (($uri[3] == "user" && $uri[4] == "login") || (in_array($uri[4], $this->operations)));
+        }
         return false;
     }
 
     public function verifyBodyKeys($countKeys, $chaves, $keys)
     {
-        for ($i=0; $i < $countKeys; $i++) {
+        for ($i = 0; $i < $countKeys; $i++) {
             if (!in_array($chaves[$i], $keys))
             {
                 return false;
@@ -87,7 +88,7 @@ class RequestValidator implements IRequestValidator
 
     public function isBodyValid($body, $uri) {
 
-        $uri = explode('/', strtok($_SERVER["REQUEST_URI"],'?'));
+        $uri = explode('/', strtok($_SERVER["REQUEST_URI"], '?'));
 		
         $uri = $uri[3]; // resource
 
@@ -104,7 +105,7 @@ class RequestValidator implements IRequestValidator
 		
         foreach ($resources as $resource)
         {
-            if(strcmp($uri, $resource) == 0)
+            if (strcmp($uri, $resource) == 0)
             {
                 switch ($uri) {
                     case 'user':
