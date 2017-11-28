@@ -135,11 +135,12 @@ private function setResource()
 private function setPorteration()
 {
     $explodedUri = explode('/', $this->uri);
-    if (count($explodedUri) > 4)
-        $this->operation = $explodedUri[4];
-    else 
-        $this->operation = "";
-}
+    if (count($explodedUri) > 4) {
+            $this->operation = $explodedUri[4];
+    } else {
+            $this->operation = "";
+    }
+    }
      
 }
 

@@ -45,8 +45,9 @@ class UserValidator implements IUserValidator
 
     public function isPasswordValid($password) 
     {
-        if (count($password) > 20) 
-            return false;
+        if (count($password) > 20) {
+                    return false;
+        }
         return true;
     }
 }
