@@ -17,15 +17,17 @@ class UserController {
     {
         $body = $this->request->getBody(); 
         $queryString = $this->request->getQueryString();
-        if ($this->request->getOperation() == 'disable' && $this->request->getMethod() == 'PUT')
-            return $this->delete($body);
+        if ($this->request->getOperation() == 'disable' && $this->request->getMethod() == 'PUT') {
+                    return $this->delete($body);
+        }
         switch ($this->request->getMethod())
         {
             case "GET":
                 return $this->search($queryString);
             case "POST":
-                if ($this->request->getOperation() == 'login')
-                    return $this->login($body);
+                if ($this->request->getOperation() == 'login') {
+                                    return $this->login($body);
+                }
                 return $this->create($body);
             case "PUT":
                 return $this->update($body, $queryString);
@@ -73,8 +75,7 @@ class UserController {
             $conditions = $body;
             return (new DBHandler())->update($conditions, $set, 'users');
 
-        }
-        catch (RequestException $ue) 
+        } catch (RequestException $ue) 
         {
             http_response_code(400);
             return $ue->toJson();
@@ -100,8 +101,9 @@ class UserController {
     {
         $conditions = array("ativo" => 1, "username" => $body['username']);
         $result = json_decode((new DBHandler())->search($conditions, 'users'));
-        if (count($result) > 0)
-            return $this->verifyPassword($body, $result[0]);
+        if (count($result) > 0) {
+                    return $this->verifyPassword($body, $result[0]);
+        }
 
         http_response_code(401);
         return json_encode(array('401' => 'Unauthorized'));
